@@ -50,6 +50,7 @@ describe Idv::ProfileJob do
         expect(result.normalized_applicant.last_name).to eq('PICARD')
         expect(result.reasons).to eq(['Everything looks good', 'valid state ID'])
         expect(result.errors).to eq({})
+        expect(result.session_id).to be_present
       end
     end
 
@@ -73,6 +74,7 @@ describe Idv::ProfileJob do
         expect(result.job_failed?).to eq(false)
         expect(result.reasons).to eq(['The name was suspicious'])
         expect(result.errors).to eq(first_name: 'Unverified first name.')
+        expect(result.session_id).to be_present
         expect(agent).to have_received(:start)
         expect(agent).to_not have_received(:submit_state_id)
       end
@@ -94,6 +96,7 @@ describe Idv::ProfileJob do
         expect(result.job_failed?).to eq(false)
         expect(result.reasons).to eq(['Everything looks good', 'invalid state id number'])
         expect(result.errors).to eq(state_id_number: 'The state ID number could not be verified')
+        expect(result.session_id).to be_present
       end
     end
 

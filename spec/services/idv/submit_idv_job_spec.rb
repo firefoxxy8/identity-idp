@@ -15,6 +15,7 @@ RSpec.describe Idv::SubmitIdvJob do
       user_session: {
         idv: {
           applicant: applicant,
+          vendor_session_id: vendor_session_id,
         },
       }
     )
@@ -22,6 +23,7 @@ RSpec.describe Idv::SubmitIdvJob do
 
   let(:user) { build(:user) }
   let(:applicant) { Proofer::Applicant.new(first_name: 'Greatest') }
+  let(:vendor_session_id) { '12345' }
   let(:result_id) { 'abcdef' }
   let(:vendor_params) { { dob: '01/01/1985' } }
 
@@ -31,6 +33,7 @@ RSpec.describe Idv::SubmitIdvJob do
         with(
           result_id: result_id,
           vendor_params: vendor_params,
+          vendor_session_id: vendor_session_id,
           applicant_json: applicant.to_json
         )
 
@@ -54,6 +57,7 @@ RSpec.describe Idv::SubmitIdvJob do
         with(
           result_id: result_id,
           vendor_params: vendor_params,
+          vendor_session_id: vendor_session_id,
           applicant_json: applicant.to_json
         )
 

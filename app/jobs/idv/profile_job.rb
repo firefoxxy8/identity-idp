@@ -54,7 +54,8 @@ module Idv
         success: result_successful?,
         errors: result_errors,
         reasons: result_reasons,
-        normalized_applicant: resolution_vendor_resp.normalized_applicant
+        normalized_applicant: resolution_vendor_resp.normalized_applicant,
+        session_id: resolution.session_id
       )
       store_result(result)
     end
