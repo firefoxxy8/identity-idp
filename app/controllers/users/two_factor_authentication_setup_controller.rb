@@ -11,6 +11,26 @@ module Users
       analytics.track_event(Analytics::USER_REGISTRATION_PHONE_SETUP_VISIT)
     end
 
+    def tfa
+      @two_factor_options_form = TwoFactorOptionsForm.new(current_user)
+      analytics.track_event(Analytics::USER_REGISTRATION_PHONE_SETUP_VISIT)
+      render :tfa_choice
+    end
+    
+    def tfa_set
+      @two_factor_options_form = TwoFactorOptionsForm.new(current_user)
+      result = @two_factor_options_form.submit(params[:two_factor_options_form])
+      
+      # analytics.track_event(Analytics::USER_REGISTRATION_PHONE_SETUP_VISIT)
+      
+      if result.success?
+        process_valid_form
+      else
+        render :tfa_choice
+      end
+      
+    end
+
     def set
       @user_phone_form = UserPhoneForm.new(current_user)
       result = @user_phone_form.submit(params[:user_phone_form])
@@ -35,7 +55,18 @@ module Users
     end
 
     def process_valid_form
-      prompt_to_confirm_phone(phone: @user_phone_form.phone)
+      # prompt_to_confirm_phone(phone: @user_phone_form.phone)
+      case @two_factor_options_form.otp_delivery_preference
+      when :sms
+        redirect_to phone_setup_url
+      when :voice
+        redirect_to phone_setup_url
+      when :auth_app
+        redirect_to phone_setup_url
+      when :piv_cac
+        redirect_to phone_setup_url
+      end
+
     end
   end
 end

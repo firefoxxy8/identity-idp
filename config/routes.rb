@@ -111,6 +111,8 @@ Rails.application.routes.draw do
     post '/manage/personal_key' => 'users/personal_keys#update'
 
     get '/otp/send' => 'users/two_factor_authentication#send_code'
+    get '/two_factor_options' => 'users/two_factor_authentication_setup#tfa'
+    patch '/two_factor_options' => 'users/two_factor_authentication_setup#tfa_set'
     get '/phone_setup' => 'users/two_factor_authentication_setup#index'
     patch '/phone_setup' => 'users/two_factor_authentication_setup#set'
     get '/users/two_factor_authentication' => 'users/two_factor_authentication#show',
