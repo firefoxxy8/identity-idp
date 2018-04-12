@@ -38,15 +38,15 @@ p.mt-tiny.mb3
             = t('devise.two_factor_authentication.two_factor_choice_options.auth_app')
           div.regular.gray-dark.fs-10p
             = t('devise.two_factor_authentication.two_factor_choice_options.auth_app_info')
-      label.btn-border.col-12.mb4
-        .radio
-          = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :piv_cac, false,
-            class: :otp_delivery_preference_piv_cac
-          span.indicator
-          span.blue.bold.fs-20p
-            = t('devise.two_factor_authentication.two_factor_choice_options.piv_cac')
-          div.regular.gray-dark.fs-10p
-            = t('devise.two_factor_authentication.two_factor_choice_options.piv_cac_info')
+      / label.btn-border.col-12.mb4
+      /   .radio
+      /     = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :piv_cac, false,
+      /       class: :otp_delivery_preference_piv_cac
+      /     span.indicator
+      /     span.blue.bold.fs-20p
+      /       = t('devise.two_factor_authentication.two_factor_choice_options.piv_cac')
+      /     div.regular.gray-dark.fs-10p
+      /       = t('devise.two_factor_authentication.two_factor_choice_options.piv_cac_info')
   = f.button :submit, t('forms.buttons.continue')
   
 = render 'shared/cancel', link: destroy_user_session_path

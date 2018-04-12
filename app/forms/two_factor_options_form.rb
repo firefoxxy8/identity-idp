@@ -1,8 +1,9 @@
 class TwoFactorOptionsForm
   include ActiveModel::Model
-  include OtpDeliveryPreferenceValidator
 
   attr_accessor :otp_delivery_preference
+
+  validates :otp_delivery_preference, inclusion: {in: %w[voice sms auth_app]}
 
   def initialize(user)
     self.user = user

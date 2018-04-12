@@ -18,7 +18,7 @@ class UserPhoneForm
     success = valid?
 
     self.phone = submitted_phone unless success
-    update_otp_delivery_preference_for_user if otp_delivery_preference_changed? && success
+    update_otp_delivery_preference_for_user if otp_delivery_preference.present? && otp_delivery_preference_changed? && success
 
     FormResponse.new(success: success, errors: errors.messages, extra: extra_analytics_attributes)
   end
@@ -44,7 +44,7 @@ class UserPhoneForm
       submitted_phone,
       country_code: international_code
     )
-    self.otp_delivery_preference = params[:otp_delivery_preference]
+    self.otp_delivery_preference ||= params[:otp_delivery_preference]
   end
 
   def otp_delivery_preference_changed?

@@ -26,7 +26,7 @@ class User < ApplicationRecord
   include UserEncryptedAttributeOverrides
 
   enum role: { user: 0, tech: 1, admin: 2 }
-  enum otp_delivery_preference: { sms: 0, voice: 1 }
+  enum otp_delivery_preference: { sms: 0, voice: 1, auth_app: 2 }
 
   has_one_time_password
 

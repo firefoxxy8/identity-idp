@@ -38,7 +38,7 @@ module Users
       analytics.track_event(Analytics::MULTI_FACTOR_AUTH_PHONE_SETUP, result.to_h)
 
       if result.success?
-        process_valid_form
+        prompt_to_confirm_phone(phone: @user_phone_form.phone)
       else
         render :index
       end
@@ -55,16 +55,15 @@ module Users
     end
 
     def process_valid_form
-      # prompt_to_confirm_phone(phone: @user_phone_form.phone)
       case @two_factor_options_form.otp_delivery_preference
-      when :sms
+      when 'sms'
         redirect_to phone_setup_url
-      when :voice
+      when 'voice'
         redirect_to phone_setup_url
-      when :auth_app
-        redirect_to phone_setup_url
-      when :piv_cac
-        redirect_to phone_setup_url
+      when 'auth_app'
+        redirect_to authenticator_setup_url
+      # when :piv_cac
+      #   redirect_to phone_setup_url
       end
 
     end
