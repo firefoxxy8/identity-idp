@@ -2,10 +2,11 @@ require 'rails_helper'
 
 describe Users::TotpSetupController, devise: true do
   describe 'before_actions' do
-    it 'includes confirm_two_factor_authenticated' do
+    it 'includes appropriate before_actions' do
       expect(subject).to have_actions(
         :before,
-        :confirm_two_factor_authenticated
+        :authenticate_user!,
+        [:confirm_two_factor_authenticated, if: :two_factor_enabled?],
       )
     end
   end
