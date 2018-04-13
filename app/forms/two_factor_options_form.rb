@@ -10,7 +10,6 @@ class TwoFactorOptionsForm
   end
 
   def submit(params)
-
     self.otp_delivery_preference = params[:otp_delivery_preference]
 
     success = valid?
@@ -33,7 +32,7 @@ class TwoFactorOptionsForm
   def otp_delivery_preference_changed?
     otp_delivery_preference != user.otp_delivery_preference
   end
-  
+
   def update_otp_delivery_preference_for_user
     user_attributes = { otp_delivery_preference: otp_delivery_preference }
     UpdateUser.new(user: user, attributes: user_attributes).call

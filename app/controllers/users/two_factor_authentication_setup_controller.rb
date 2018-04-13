@@ -20,7 +20,6 @@ module Users
     def tfa_set
       @two_factor_options_form = TwoFactorOptionsForm.new(current_user)
       result = @two_factor_options_form.submit(params[:two_factor_options_form])
-      
       # analytics.track_event(Analytics::USER_REGISTRATION_PHONE_SETUP_VISIT)
 
       if result.success?
