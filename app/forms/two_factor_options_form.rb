@@ -3,14 +3,14 @@ class TwoFactorOptionsForm
 
   attr_accessor :otp_delivery_preference
 
-  validates :otp_delivery_preference, inclusion: {in: %w[voice sms auth_app]}
+  validates :otp_delivery_preference, inclusion: { in: %w[voice sms auth_app] }
 
   def initialize(user)
     self.user = user
   end
 
   def submit(params)
-    
+
     self.otp_delivery_preference = params[:otp_delivery_preference]
 
     success = valid?
