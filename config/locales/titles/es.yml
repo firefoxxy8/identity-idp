@@ -28,6 +28,7 @@ es:
     totp_setup:
       new: Configure la autenticación de dos factores
     two_factor_setup: Configuración de autenticación de dos factores
+    two_factor_choice: Asegure su cuenta
     verify_email: Revise su email
     verify_profile: Active su cuenta
     visitors:

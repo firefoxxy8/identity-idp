@@ -28,6 +28,7 @@ fr:
     totp_setup:
       new: Configurer l'authentification à deux facteurs
     two_factor_setup: Configuration de l'authentification à deux facteurs
+    two_factor_choice: Sécurise ton compte
     verify_email: Consultez vos courriels
     verify_profile: Activez votre compte
     visitors:
