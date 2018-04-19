@@ -1,30 +1,52 @@
-- title t('titles.two_factor_setup')
+- title t('titles.two_factor_choice')
 
-h1.h3.my0 = t('devise.two_factor_authentication.two_factor_setup')
-p.mt-tiny.mb0
-  = t('devise.two_factor_authentication.otp_setup_html')
-= simple_form_for(@user_phone_form,
-    html: { autocomplete: 'off', role: 'form' },
-    data: { unsupported_area_codes: unsupported_area_codes,
-      international_phone_form: true },
-    method: :patch,
-    url: phone_setup_path) do |f|
-  .clearfix
-    .sm-col.sm-col-8
-      = f.input :international_code,
-        collection: international_phone_codes,
-        include_blank: false,
-        input_html: { class: 'international-code' }
-  = f.label :phone, class: 'block'
-    strong.left = t('devise.two_factor_authentication.otp_phone_label')
-    span#otp_phone_label_info.ml1.italic
-      = t('devise.two_factor_authentication.otp_phone_label_info')
-  = f.input :phone, as: :tel, label: false, required: true,
-      input_html: { class: 'phone sm-col-8 mb4' }
-      
+h1.h3.my0 = t('devise.two_factor_authentication.two_factor_choice')
+p.mt-tiny.mb3
+  = t('devise.two_factor_authentication.two_factor_choice_intro')
 
-  / = render 'users/shared/otp_delivery_preference_selection'
-
-  = f.button :submit, t('forms.buttons.send_security_code')
-
+= simple_form_for(@two_factor_options_form,
+      html: { autocomplete: 'off', role: 'form' },
+      method: :patch,
+      url: two_factor_options_path) do |f|
+  .mb3
+    fieldset.m0.p0.border-none
+      legend.mb1.h4.serif.bold = t('devise.two_factor_authentication.two_factor_choice_options.title') + ':'
+      label.btn-border.col-12.mb1
+        .radio
+          = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :voice, true,
+            class: :otp_delivery_preference_voice
+          span.indicator
+          span.blue.bold.fs-20p
+            = t('devise.two_factor_authentication.two_factor_choice_options.voice')
+          div.regular.gray-dark.fs-10p
+            = t('devise.two_factor_authentication.two_factor_choice_options.voice_info')
+      label.btn-border.col-12.mb1
+        .radio
+          = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :sms, false,
+            class: :otp_delivery_preference_sms
+          span.indicator
+          span.blue.bold.fs-20p
+            = t('devise.two_factor_authentication.two_factor_choice_options.sms')
+          div.regular.gray-dark.fs-10p
+            = t('devise.two_factor_authentication.two_factor_choice_options.sms_info')
+      label.btn-border.col-12.mb1
+        .radio
+          = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :auth_app, false,
+            class: :otp_delivery_preference_auth_app
+          span.indicator
+          span.blue.bold.fs-20p
+            = t('devise.two_factor_authentication.two_factor_choice_options.auth_app')
+          div.regular.gray-dark.fs-10p
+            = t('devise.two_factor_authentication.two_factor_choice_options.auth_app_info')
+      / label.btn-border.col-12.mb4
+      /   .radio
+      /     = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :piv_cac, false,
+      /       class: :otp_delivery_preference_piv_cac
+      /     span.indicator
+      /     span.blue.bold.fs-20p
+      /       = t('devise.two_factor_authentication.two_factor_choice_options.piv_cac')
+      /     div.regular.gray-dark.fs-10p
+      /       = t('devise.two_factor_authentication.two_factor_choice_options.piv_cac_info')
+  = f.button :submit, t('forms.buttons.continue')
+  
 = render 'shared/cancel', link: destroy_user_session_path
