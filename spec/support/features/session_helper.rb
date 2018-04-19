@@ -8,9 +8,15 @@ module Features
       click_button t('forms.buttons.submit.default')
     end
 
+    def choose_otp_delivery_preference(preference)
+      choose t("devise.two_factor_authentication.two_factor_choice_options.#{preference}")
+      click_button t('forms.buttons.continue')
+    end
+
     def sign_up_and_2fa_loa1_user
       allow(FeatureManagement).to receive(:prefill_otp_codes?).and_return(true)
       user = sign_up_and_set_password
+      choose_otp_delivery_preference('sms')
       fill_in 'Phone', with: '202-555-1212'
       click_send_security_code
       click_submit_default
@@ -346,6 +352,7 @@ module Features
     end
 
     def set_up_2fa_with_valid_phone
+      choose_otp_delivery_preference('sms')
       fill_in 'user_phone_form[phone]', with: '202-555-1212'
       click_send_security_code
     end
@@ -371,7 +378,7 @@ module Features
     end
 
     def set_up_2fa_with_authenticator_app
-      click_link t('links.two_factor_authentication.app_option')
+      choose_otp_delivery_preference('auth_app')
 
       expect(page).to have_current_path authenticator_setup_path
 
