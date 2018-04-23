@@ -25,19 +25,19 @@ feature 'Two Factor Authentication' do
 
       expect(page).to have_content invalid_phone_message
 
-      submit_2fa_setup_form_with_valid_phone_and_choose_phone_call_delivery
+      submit_2fa_setup_form_with_valid_phone
 
       expect(page).to_not have_content invalid_phone_message
-      expect(current_path).to eq login_two_factor_path(otp_delivery_preference: 'voice')
+      expect(current_path).to eq login_two_factor_path(otp_delivery_preference: 'sms')
       expect(user.reload.phone).to_not eq '+1 (555) 555-1212'
-      expect(user.voice?).to eq true
+      expect(user.sms?).to eq true
     end
 
     context 'user enters OTP incorrectly 3 times' do
       it 'locks the user out' do
         sign_in_before_2fa
 
-        submit_2fa_setup_form_with_valid_phone_and_choose_phone_call_delivery
+        submit_2fa_setup_form_with_valid_phone
         3.times do
           fill_in('code', with: 'bad-code')
           click_button t('forms.buttons.submit.default')
@@ -53,10 +53,9 @@ feature 'Two Factor Authentication' do
       scenario 'renders an error if a user submits with phone selected' do
         sign_in_before_2fa
         fill_in 'Phone', with: unsupported_phone
-        choose 'Phone call'
         click_send_security_code
 
-        expect(current_path).to eq(phone_setup_path)
+        expect(current_path).to eq login_two_factor_path(otp_delivery_preference: 'sms')
         expect(page).to have_content t(
           'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported',
           location: 'Bahamas'
@@ -93,10 +92,9 @@ feature 'Two Factor Authentication' do
         sign_in_before_2fa
         select 'Turkey +90', from: 'International code'
         fill_in 'Phone', with: '555-555-5000'
-        choose 'Phone call'
         click_send_security_code
 
-        expect(current_path).to eq(phone_setup_path)
+        expect(current_path).to eq login_two_factor_path(otp_delivery_preference: 'sms')
         expect(page).to have_content t(
           'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported',
           location: 'Turkey'
@@ -184,9 +182,8 @@ feature 'Two Factor Authentication' do
     click_send_security_code
   end
 
-  def submit_2fa_setup_form_with_valid_phone_and_choose_phone_call_delivery
+  def submit_2fa_setup_form_with_valid_phone
     fill_in 'Phone', with: '555-555-1212'
-    choose 'Phone call'
     click_send_security_code
   end
 
@@ -432,7 +429,7 @@ feature 'Two Factor Authentication' do
         sign_in_before_2fa
         max_attempts = Figaro.env.otp_delivery_blocklist_maxretry.to_i
 
-        submit_2fa_setup_form_with_valid_phone_and_choose_phone_call_delivery
+        submit_2fa_setup_form_with_valid_phone
 
         max_attempts.times do
           click_link t('links.two_factor_authentication.resend_code.voice')

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'users/two_factor_authentication_setup/index.html.slim' do
+describe 'users/phone_setup/index.html.slim' do
   before do
     user = build_stubbed(:user)
 
