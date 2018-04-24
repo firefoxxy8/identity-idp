@@ -55,6 +55,7 @@ feature 'Sign Up' do
 
     allow(SmsOtpSenderJob).to receive(:perform_now).and_raise(twilio_error)
     sign_up_and_set_password
+    choose_otp_delivery_preference('sms')
     fill_in 'Phone', with: '202-555-1212'
     click_send_security_code
 
@@ -155,8 +156,7 @@ feature 'Sign Up' do
   it_behaves_like 'creating an account using authenticator app for 2FA', :oidc
 
   it 'allows a user to choose TOTP as 2FA method during sign up' do
-    user = create(:user)
-    sign_in_user(user)
+    sign_up_and_set_password
     set_up_2fa_with_authenticator_app
     click_acknowledge_personal_key
 

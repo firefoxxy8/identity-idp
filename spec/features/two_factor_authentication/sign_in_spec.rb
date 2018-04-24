@@ -430,7 +430,7 @@ feature 'Two Factor Authentication' do
         submit_2fa_setup_form_with_valid_phone
 
         max_attempts.times do
-          click_link t('links.two_factor_authentication.resend_code.voice')
+          click_link t('links.two_factor_authentication.resend_code.sms')
         end
 
         expect(page).to have_content t('titles.account_locked')

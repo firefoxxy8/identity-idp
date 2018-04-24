@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Users::TwoFactorAuthenticationSetupController do
+describe Users::PhoneSetupController do
   describe 'GET index' do
     context 'when signed out' do
       it 'redirects to sign in page' do
@@ -11,7 +11,7 @@ describe Users::TwoFactorAuthenticationSetupController do
     end
   end
 
-  describe 'PATCH set' do
+  describe 'PATCH create' do
     let(:user) { create(:user) }
 
     it 'tracks an event when the number is invalid' do
@@ -27,10 +27,10 @@ describe Users::TwoFactorAuthenticationSetupController do
       expect(@analytics).to receive(:track_event).
         with(Analytics::MULTI_FACTOR_AUTH_PHONE_SETUP, result)
 
-      patch :set, params: {
+      patch :create, params: {
         user_phone_form: {
           phone: '703-555-010',
-          otp_delivery_preference: :sms,
+          # otp_delivery_preference: :sms,
           international_code: 'US',
         },
       }
@@ -39,6 +39,8 @@ describe Users::TwoFactorAuthenticationSetupController do
     end
 
     context 'with voice' do
+      let(:user) { create(:user, otp_delivery_preference: 'voice') }
+
       it 'prompts to confirm the number' do
         sign_in(user)
 
@@ -53,10 +55,10 @@ describe Users::TwoFactorAuthenticationSetupController do
           with(Analytics::MULTI_FACTOR_AUTH_PHONE_SETUP, result)
 
         patch(
-          :set,
+          :create,
           params: {
             user_phone_form: { phone: '703-555-0100',
-                               otp_delivery_preference: 'voice',
+                              #  otp_delivery_preference: 'voice',
                                international_code: 'US' },
           }
         )
@@ -87,10 +89,10 @@ describe Users::TwoFactorAuthenticationSetupController do
           with(Analytics::MULTI_FACTOR_AUTH_PHONE_SETUP, result)
 
         patch(
-          :set,
+          :create,
           params: {
             user_phone_form: { phone: '703-555-0100',
-                               otp_delivery_preference: :sms,
+                              #  otp_delivery_preference: :sms,
                                international_code: 'US' },
           }
         )
@@ -120,10 +122,10 @@ describe Users::TwoFactorAuthenticationSetupController do
           with(Analytics::MULTI_FACTOR_AUTH_PHONE_SETUP, result)
 
         patch(
-          :set,
+          :create,
           params: {
             user_phone_form: { phone: '703-555-0100',
-                               otp_delivery_preference: :sms,
+                              #  otp_delivery_preference: :sms,
                                international_code: 'US' },
           }
         )
