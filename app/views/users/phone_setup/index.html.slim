@@ -15,16 +15,16 @@ p.mt-tiny.mb0
         collection: international_phone_codes,
         include_blank: false,
         input_html: { class: 'international-code' }
-  = f.label :phone, class: 'block'
+  = f.label :phone
     strong.left = t('devise.two_factor_authentication.otp_phone_label')
-    span#otp_phone_label_info.ml1.italic
-      = t('devise.two_factor_authentication.otp_phone_label_info')
+    
   = f.input :phone, as: :tel, label: false, required: true,
-      input_html: { class: 'phone sm-col-8 mb4' }
+      input_html: { class: 'phone sm-col-8 block mb4' }
       
 
   / = render 'users/shared/otp_delivery_preference_selection'
 
   = f.button :submit, t('forms.buttons.send_security_code')
 
-= render 'shared/cancel', link: destroy_user_session_path
+.mt2.pt1.border-top
+  = link_to t('devise.two_factor_authentication.two_factor_choice_cancel'), two_factor_options_path

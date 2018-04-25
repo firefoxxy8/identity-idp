@@ -13,15 +13,6 @@ p.mt-tiny.mb3
       legend.mb1.h4.serif.bold = t('devise.two_factor_authentication.two_factor_choice_options.title') + ':'
       label.btn-border.col-12.mb1
         .radio
-          = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :voice, false,
-            class: :otp_delivery_preference_voice
-          span.indicator
-          span.blue.bold.fs-20p
-            = t('devise.two_factor_authentication.two_factor_choice_options.voice')
-          div.regular.gray-dark.fs-10p
-            = t('devise.two_factor_authentication.two_factor_choice_options.voice_info')
-      label.btn-border.col-12.mb1
-        .radio
           = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :sms, true,
             class: :otp_delivery_preference_sms
           span.indicator
@@ -29,6 +20,15 @@ p.mt-tiny.mb3
             = t('devise.two_factor_authentication.two_factor_choice_options.sms')
           div.regular.gray-dark.fs-10p
             = t('devise.two_factor_authentication.two_factor_choice_options.sms_info')
+      label.btn-border.col-12.mb1
+        .radio
+          = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :voice, false,
+            class: :otp_delivery_preference_voice
+          span.indicator
+          span.blue.bold.fs-20p
+            = t('devise.two_factor_authentication.two_factor_choice_options.voice')
+          div.regular.gray-dark.fs-10p
+            = t('devise.two_factor_authentication.two_factor_choice_options.voice_info')
       label.btn-border.col-12.mb1
         .radio
           = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :auth_app, false,

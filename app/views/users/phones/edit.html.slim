@@ -12,8 +12,6 @@ h1.h3.my0 = t('headings.edit_info.phone')
         input_html: { class: 'international-code' }
   = f.label :phone
     strong.left = t('account.index.phone')
-    span#otp_phone_label_info.ml1.italic
-      = t('devise.two_factor_authentication.otp_phone_label_info')
   = f.input :phone, as: :tel, required: true, input_html: { class: 'phone', value: nil },
     label: false
   = render 'users/shared/otp_delivery_preference_selection'

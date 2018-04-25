@@ -169,6 +169,7 @@ fr:
         piv_cac_info: Utilisez votre carte PIV / CAC pour sécuriser votre compte.
       two_factor_choice_intro: login.gov s'assure que vous pouvez accéder à votre
         compte en ajoutant une deuxième couche de sécurité.
+      two_factor_choice_cancel: ‹ Choisissez une autre option
       two_factor_setup: Ajoutez un numéro de téléphone
       user:
         new_otp_sent: Nous vous avons envoyé un code de sécurité à utilisation unique.
