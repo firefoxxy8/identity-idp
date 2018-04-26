@@ -30,6 +30,7 @@ feature 'Remembering a 2FA device' do
       user = sign_up_and_set_password
       user.password = Features::SessionHelper::VALID_PASSWORD
       choose_otp_delivery_preference('sms')
+      puts current_path
       fill_in :user_phone_form_phone, with: '5551231234'
       click_send_security_code
       check :remember_device
