@@ -20,7 +20,9 @@ p.mt-tiny.mb0
     
   = f.input :phone, as: :tel, label: false, required: true,
       input_html: { class: 'phone sm-col-8 block mb4' }
-      
+    
+  - if !@user_phone_form.otp_delivery_preference_supported?
+    p message here
 
   / = render 'users/shared/otp_delivery_preference_selection'
 

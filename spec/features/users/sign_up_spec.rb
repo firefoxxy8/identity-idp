@@ -40,6 +40,21 @@ feature 'Sign Up' do
     end
   end
 
+  context 'user cancels on 2fa setup screen', :email do
+    it 'returns user to 2fa setup screen' do
+      begin_sign_up_with_sp_and_loa(loa3: false)
+      choose_otp_delivery_preference('sms')
+      click_on t('devise.two_factor_authentication.two_factor_choice_cancel')
+      
+      expect(page).to have_current_path(two_factor_options_path)
+      
+      choose_otp_delivery_preference('auth_app')
+      click_on t('devise.two_factor_authentication.two_factor_choice_cancel')
+      
+      expect(page).to have_current_path(two_factor_options_path)
+    end
+  end
+
   context 'user cancels with language preference set' do
     it 'redirects user to the translated home page' do
       visit sign_up_email_path(locale: 'es')
@@ -68,7 +83,7 @@ feature 'Sign Up' do
       it 'allows the user to toggle the modal' do
         begin_sign_up_with_sp_and_loa(loa3: false)
         expect(page).not_to have_xpath("//div[@id='cancel-action-modal']")
-
+        
         click_on t('links.cancel')
         expect(page).to have_xpath("//div[@id='cancel-action-modal']")
 

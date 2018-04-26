@@ -93,8 +93,9 @@ feature 'Two Factor Authentication' do
         select 'Turkey +90', from: 'International code'
         fill_in 'Phone', with: '555-555-5000'
         click_send_security_code
-
+        
         expect(current_path).to eq login_two_factor_path(otp_delivery_preference: 'sms')
+      
         expect(page).to have_content t(
           'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported',
           location: 'Turkey'

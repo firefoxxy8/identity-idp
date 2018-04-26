@@ -161,7 +161,7 @@ es:
         piv_cac_info: Use su tarjeta PIV / CAC para asegurar su cuenta.
       two_factor_choice_intro: login.gov se asegura de que pueda acceder a su cuenta
         agregando una segunda capa de seguridad.
-      two_factor_choice_cancel: ‹ Elige otra opción
+      two_factor_choice_cancel: "‹ Elige otra opción"
       two_factor_setup: Añada un número de teléfono
       user:
         new_otp_sent: Le enviamos un nuevo código de sólo un uso
