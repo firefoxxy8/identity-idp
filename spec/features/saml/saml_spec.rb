@@ -29,10 +29,11 @@ feature 'saml api' do
       end
 
       it 'prompts the user to set up 2FA' do
-        expect(current_path).to eq phone_setup_path
+        expect(current_path).to eq two_factor_options_path
       end
 
       it 'prompts the user to confirm phone after setting up 2FA' do
+        choose_otp_delivery_preference('sms')
         fill_in 'Phone', with: '202-555-1212'
         click_send_security_code
 

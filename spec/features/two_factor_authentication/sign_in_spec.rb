@@ -9,7 +9,10 @@ feature 'Two Factor Authentication' do
 
       attempt_to_bypass_2fa_setup
 
-      expect(current_path).to eq phone_setup_path
+      expect(current_path).to eq two_factor_options_path
+
+      choose_otp_delivery_preference('sms')
+
       expect(page).
         to have_content t('devise.two_factor_authentication.two_factor_setup')
 
@@ -37,6 +40,7 @@ feature 'Two Factor Authentication' do
       it 'locks the user out' do
         sign_in_before_2fa
 
+        choose_otp_delivery_preference('sms')
         submit_2fa_setup_form_with_valid_phone
         3.times do
           fill_in('code', with: 'bad-code')
@@ -90,6 +94,7 @@ feature 'Two Factor Authentication' do
     context 'with international phone that does not support phone delivery' do
       scenario 'renders an error if a user submits with phone selected' do
         sign_in_before_2fa
+        choose_otp_delivery_preference('sms')
         select 'Turkey +90', from: 'International code'
         fill_in 'Phone', with: '555-555-5000'
         click_send_security_code
@@ -104,6 +109,7 @@ feature 'Two Factor Authentication' do
 
       scenario 'disables the phone option and displays a warning with js', :js do
         sign_in_before_2fa
+        choose_otp_delivery_preference('sms')
         select 'Turkey +90', from: 'International code'
         fill_in 'Phone', with: '+90 312 213 29 65'
         phone_radio_button = page.find(
@@ -128,6 +134,7 @@ feature 'Two Factor Authentication' do
 
       scenario 'updates international code as user types', :js do
         sign_in_before_2fa
+        choose_otp_delivery_preference('sms')
         fill_in 'Phone', with: '+81 54 354 3643'
 
         expect(page.find('#user_phone_form_international_code').value).to eq 'JP'
@@ -145,6 +152,7 @@ feature 'Two Factor Authentication' do
 
       scenario 'does not allow the user to remove the international code after entering it', :js do
         sign_in_before_2fa
+        choose_otp_delivery_preference('sms')
         fill_in 'Phone', with: '+81 54 354 3643'
 
         input = find('#user_phone_form_phone')
@@ -427,7 +435,8 @@ feature 'Two Factor Authentication' do
 
         sign_in_before_2fa
         max_attempts = Figaro.env.otp_delivery_blocklist_maxretry.to_i
-
+        
+        choose_otp_delivery_preference('sms')
         submit_2fa_setup_form_with_valid_phone
 
         max_attempts.times do
