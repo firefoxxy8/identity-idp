@@ -9,8 +9,8 @@ module Features
     end
 
     def choose_otp_delivery_preference(preference)
-      choose t("devise.two_factor_authentication.two_factor_choice_options.#{preference}")
-      click_button t('forms.buttons.continue')
+      find("label[for='two_factor_options_form_otp_delivery_preference_#{preference}']").click
+      click_on t('forms.buttons.continue')
     end
 
     def sign_up_and_2fa_loa1_user

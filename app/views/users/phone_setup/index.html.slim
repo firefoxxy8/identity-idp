@@ -21,8 +21,8 @@ p.mt-tiny.mb0
   = f.input :phone, as: :tel, label: false, required: true,
       input_html: { class: 'phone sm-col-8 block mb4' }
     
-  / - if !@user_phone_form.otp_delivery_preference_supported
-  /   p message here
+  - unless @user_phone_form.otp_delivery_preference_supported?
+    = link_to t('devise.two_factor_authentication.otp_delivery_preference.phone_unsupported_select_another_option'), two_factor_options_path
 
   / = render 'users/shared/otp_delivery_preference_selection'
 

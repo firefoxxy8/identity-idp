@@ -15,7 +15,6 @@ feature 'Remembering a 2FA device' do
     def remember_device_and_sign_out_user
       user = user_with_2fa
       sign_in_user(user)
-      puts"current_path:#{current_path}"
       check :remember_device
       click_submit_default
       first(:link, t('links.sign_out')).click

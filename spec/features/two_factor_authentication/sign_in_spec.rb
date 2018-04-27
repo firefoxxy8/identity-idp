@@ -51,90 +51,57 @@ feature 'Two Factor Authentication' do
       end
     end
 
-    context 'with U.S. phone that does not support phone delivery method' do
+    context 'with U.S. phone that does not support voice delivery method' do
       let(:unsupported_phone) { '242-555-5555' }
 
-      scenario 'renders an error if a user submits with phone selected' do
+      scenario 'renders an error if a user submits with voice selected' do
         sign_in_before_2fa
+        choose_otp_delivery_preference('voice')
         fill_in 'Phone', with: unsupported_phone
         click_send_security_code
 
-        expect(current_path).to eq login_two_factor_path(otp_delivery_preference: 'sms')
+        expect(current_path).to eq phone_setup_path
         expect(page).to have_content t(
           'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported',
           location: 'Bahamas'
         )
-      end
-
-      scenario 'disables the phone option and displays a warning with js', :js do
-        sign_in_before_2fa
-
-        fill_in 'Phone', with: unsupported_phone
-        phone_radio_button = page.find(
-          '#user_phone_form_otp_delivery_preference_voice',
-          visible: :all
+        
+        # rubocop:disable Metrics/LineLength
+        click_on t(
+          'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported_select_another_option'
         )
-
-        expect(page).to have_content t(
-          'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported',
-          location: 'Bahamas'
-        )
-        expect(phone_radio_button).to be_disabled
-
-        fill_in 'Phone', with: '555-555-5000'
-
-        expect(page).not_to have_content t(
-          'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported',
-          location: 'Bahamas'
-        )
-        expect(phone_radio_button).to_not be_disabled
+        # rubocop:enable Metrics/LineLength
+        
+        expect(current_path).to eq two_factor_options_path
       end
     end
 
-    context 'with international phone that does not support phone delivery' do
-      scenario 'renders an error if a user submits with phone selected' do
+    context 'with international phone that does not support voice delivery' do
+      scenario 'renders an error if a user submits with voice selected' do
         sign_in_before_2fa
-        choose_otp_delivery_preference('sms')
+        choose_otp_delivery_preference('voice')
         select 'Turkey +90', from: 'International code'
         fill_in 'Phone', with: '555-555-5000'
         click_send_security_code
         
-        expect(current_path).to eq login_two_factor_path(otp_delivery_preference: 'sms')
-      
+        expect(current_path).to eq phone_setup_path
         expect(page).to have_content t(
           'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported',
           location: 'Turkey'
         )
-      end
-
-      scenario 'disables the phone option and displays a warning with js', :js do
-        sign_in_before_2fa
-        choose_otp_delivery_preference('sms')
-        select 'Turkey +90', from: 'International code'
-        fill_in 'Phone', with: '+90 312 213 29 65'
-        phone_radio_button = page.find(
-          '#user_phone_form_otp_delivery_preference_voice',
-          visible: :all
+        
+        # rubocop:disable Metrics/LineLength
+        click_on t(
+          'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported_select_another_option'
         )
-
-        expect(page).to have_content t(
-          'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported',
-          location: 'Turkey'
-        )
-        expect(phone_radio_button).to be_disabled
-
-        select 'Canada +1', from: 'International code'
-
-        expect(page).not_to have_content t(
-          'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported',
-          location: 'Turkey'
-        )
-        expect(phone_radio_button).to_not be_disabled
+        # rubocop:enable Metrics/LineLength
+        
+        expect(current_path).to eq two_factor_options_path
       end
 
       scenario 'updates international code as user types', :js do
         sign_in_before_2fa
-        choose_otp_delivery_preference('sms')
+        choose_otp_delivery_preference('voice')
         fill_in 'Phone', with: '+81 54 354 3643'
 
         expect(page.find('#user_phone_form_international_code').value).to eq 'JP'
@@ -163,6 +130,7 @@ feature 'Two Factor Authentication' do
 
       scenario 'allows a user to continue typing even if a number is invalid', :js do
         sign_in_before_2fa
+        choose_otp_delivery_preference('voice')
         select 'United States of America +1', from: 'International code'
 
         input = find('#user_phone_form_phone')

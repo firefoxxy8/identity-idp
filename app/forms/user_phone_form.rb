@@ -16,7 +16,6 @@ class UserPhoneForm
     ingest_submitted_params(params)
 
     success = valid?
-
     self.phone = submitted_phone unless success
     update_otp_delivery_preference_for_user if
       otp_delivery_preference.present? && otp_delivery_preference_changed? && success
