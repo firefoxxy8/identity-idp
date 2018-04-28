@@ -12,7 +12,7 @@ module OtpDeliveryPreferenceValidator
 
   def otp_delivery_preference_supported
     return if otp_delivery_preference_supported?
-    
+
     errors.add(
       :phone,
       I18n.t(
@@ -21,9 +21,9 @@ module OtpDeliveryPreferenceValidator
       )
     )
   end
-  
+
   private
-  
+
   def phone_number_capabilities
     @phone_number_capabilities ||= PhoneNumberCapabilities.new(phone)
   end
