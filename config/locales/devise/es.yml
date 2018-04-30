@@ -118,7 +118,6 @@ es:
       otp_delivery_preference:
         instruction: Puede cambiar esta selección la próxima vez que inicie sesión.
         phone_unsupported: NOT TRANSLATED YET
-        phone_unsupported_select_another_option: Seleccione otro método de entrega
         sms: Mensaje de texto (SMS, sigla en inglés)
         title: "¿Cómo deberíamos enviarle un código?"
         voice: Llamada telefónica
@@ -150,7 +149,6 @@ es:
         aparece a continuación.
       two_factor_choice: Asegure su cuenta
       two_factor_choice_options:
-        title: Seleccione una opción para proteger su cuenta
         voice: Llamada telefónica
         voice_info: Obtenga su código de seguridad a través de una llamada telefónica.
         sms: Mensaje de texto / SMS

@@ -36,4 +36,5 @@ en:
         voice: Get another phone call
       sms: get a security code via text message
       voice: get a security code via phone call
+      select_another_option: Select another delivery method
     what_is_totp: What is an authentication app?

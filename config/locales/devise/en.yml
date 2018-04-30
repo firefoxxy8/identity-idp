@@ -143,7 +143,6 @@ en:
       totp_info: Use any authenticator app to scan the QR code below.
       two_factor_choice: Secure your account
       two_factor_choice_options:
-        title: Select an option to secure your account
         voice: Phone call
         voice_info: Get your security code via phone call.
         sms: Text message / SMS

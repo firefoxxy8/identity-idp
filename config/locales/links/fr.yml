@@ -36,4 +36,5 @@ fr:
         voice: Recevoir un autre appel téléphonique
       sms: obtenir un code de sécurité par SMS
       voice: obtenir un code par un appel téléphonique
+      select_another_option: Sélectionnez une autre méthode de
     what_is_totp: Qu'est-ce qu'une application d'authentification?

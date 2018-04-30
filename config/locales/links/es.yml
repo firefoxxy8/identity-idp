@@ -37,4 +37,5 @@ es:
         voice: Obtener otra llamada telefónica
       sms: Obtener un código de seguridad a través de un mensaje de texto
       voice: Obtener un código de seguridad a través de una llamada telefónica
+      select_another_option: Seleccione otro método de entrega
     what_is_totp: "¿Qué es una app de autenticación?"

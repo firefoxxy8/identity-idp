@@ -125,9 +125,7 @@ fr:
       otp_delivery_preference:
         instruction: Vous pouvez changer cette sélection la prochaine fois que vous
           vous connectez.
-        phone_unsupported: NOT TRANSLATED YET
-        phone_unsupported_select_another_option: Sélectionnez une autre méthode de
-          livraison
+        phone_unsupported: NOT TRANSLATED YET livraison
         sms: Message texte (SMS)
         title: Comment devrions-nous vous envoyer un code?
         voice: Appel téléphonique
@@ -159,7 +157,6 @@ fr:
         le code QR ci-dessous.
       two_factor_choice: Sécurise ton compte
       two_factor_choice_options:
-        title: Sélectionnez une option pour sécuriser votre compte
         voice: Appel téléphonique
         voice_info: Obtenez votre code de sécurité par appel téléphonique.
         sms: SMS

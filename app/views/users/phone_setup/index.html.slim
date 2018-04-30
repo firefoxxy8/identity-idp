@@ -17,12 +17,12 @@ p.mt-tiny.mb0
         input_html: { class: 'international-code' }
   = f.label :phone
     strong.left = t('devise.two_factor_authentication.otp_phone_label')
-    
+
   = f.input :phone, as: :tel, label: false, required: true,
       input_html: { class: 'phone sm-col-8 block mb4' }
-    
+
   - unless @user_phone_form.otp_delivery_preference_supported?
-    = link_to t('devise.two_factor_authentication.otp_delivery_preference.phone_unsupported_select_another_option'), two_factor_options_path
+    = link_to t('links.two_factor_authentication.select_another_option'), two_factor_options_path
 
   / = render 'users/shared/otp_delivery_preference_selection'
 
