@@ -44,8 +44,10 @@ class UserPhoneForm
       submitted_phone,
       country_code: international_code
     )
-    self.otp_delivery_preference = params[:otp_delivery_preference] if
-      params[:otp_delivery_preference]
+
+    tfa_prefs = params[:otp_delivery_preference]
+
+    self.otp_delivery_preference = tfa_prefs if tfa_prefs
   end
 
   def otp_delivery_preference_changed?
