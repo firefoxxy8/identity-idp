@@ -30,7 +30,6 @@ describe Users::PhoneSetupController do
       patch :create, params: {
         user_phone_form: {
           phone: '703-555-010',
-          # otp_delivery_preference: :sms,
           international_code: 'US',
         },
       }

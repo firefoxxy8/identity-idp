@@ -13,7 +13,7 @@ module Users
 
     def create
       @user_phone_form = UserPhoneForm.new(current_user)
-      result = @user_phone_form.submit(params[:user_phone_form])
+      result = @user_phone_form.submit(user_phone_form_params)
 
       analytics.track_event(Analytics::MULTI_FACTOR_AUTH_PHONE_SETUP, result.to_h)
 
@@ -32,6 +32,13 @@ module Users
       elsif current_user&.two_factor_enabled?
         redirect_to user_two_factor_authentication_url
       end
+    end
+
+    def user_phone_form_params
+       params.require(:user_phone_form).permit(
+         :international_code,
+         :phone
+       )
     end
   end
 end

@@ -8,13 +8,13 @@ module Users
 
     def index
       @two_factor_options_form = TwoFactorOptionsForm.new(current_user)
-      analytics.track_event(Analytics::USER_REGISTRATION_PHONE_SETUP_VISIT)
+      analytics.track_event(Analytics::USER_REGISTRATION_OTP_PREFERENCE_VISIT)
     end
 
     def create
       @two_factor_options_form = TwoFactorOptionsForm.new(current_user)
-      result = @two_factor_options_form.submit(params[:two_factor_options_form])
-      # analytics.track_event(Analytics::USER_REGISTRATION_PHONE_SETUP_VISIT)
+      result = @two_factor_options_form.submit(two_factor_options_form_params)
+      analytics.track_event(Analytics::MULTI_FACTOR_AUTH_OTP_PREFERENCE_SELECTED, result.to_h)
 
       if result.success?
         process_valid_form
@@ -40,6 +40,12 @@ module Users
       when 'auth_app'
         redirect_to authenticator_setup_url
       end
+    end
+
+    def two_factor_options_form_params
+      params.require(:two_factor_options_form).permit(
+        :otp_delivery_preference
+      )
     end
   end
 end
