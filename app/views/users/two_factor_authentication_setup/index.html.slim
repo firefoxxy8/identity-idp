@@ -9,34 +9,34 @@ p.mt-tiny.mb3
       method: :patch,
       url: two_factor_options_path) do |f|
   .mb3
-    fieldset.m0.p0.border-none
+    fieldset.m0.p0.border-none.
       legend.mb1.h4.serif.bold = t('forms.two_factor_choice.legend') + ':'
       label.btn-border.col-12.mb1 for="two_factor_options_form_otp_delivery_preference_sms"
         .radio
           = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :sms, true,
             class: :otp_delivery_preference_sms
-          span.indicator
+          span.indicator.mt-half
           span.blue.bold.fs-20p
             = t('devise.two_factor_authentication.two_factor_choice_options.sms')
-          .regular.gray-dark.fs-10p
+          .regular.gray-dark.fs-10p.mb-half
             = t('devise.two_factor_authentication.two_factor_choice_options.sms_info')
       label.btn-border.col-12.mb1 for="two_factor_options_form_otp_delivery_preference_voice"
         .radio
           = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :voice, false,
             class: :otp_delivery_preference_voice
-          span.indicator
+          span.indicator.mt-half
           span.blue.bold.fs-20p
             = t('devise.two_factor_authentication.two_factor_choice_options.voice')
-          .regular.gray-dark.fs-10p
+          .regular.gray-dark.fs-10p.mb-half
             = t('devise.two_factor_authentication.two_factor_choice_options.voice_info')
       label.btn-border.col-12.mb1 for="two_factor_options_form_otp_delivery_preference_auth_app"
         .radio
           = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :auth_app, false,
             class: :otp_delivery_preference_auth_app
-          span.indicator
+          span.indicator.mt-half
           span.blue.bold.fs-20p
             = t('devise.two_factor_authentication.two_factor_choice_options.auth_app')
-          .regular.gray-dark.fs-10p
+          .regular.gray-dark.fs-10p.mb-half
             = t('devise.two_factor_authentication.two_factor_choice_options.auth_app_info')
   = f.button :submit, t('forms.buttons.continue')
 = render 'shared/cancel', link: destroy_user_session_path

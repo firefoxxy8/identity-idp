@@ -99,6 +99,17 @@ input::-webkit-inner-spin-button {
   position: absolute;
   z-index: -1;
 }
+.tfa {
+  .radio {
+    .indicator,  {
+      margin-top: 4px;
+    }
+  }
+}
+
+.mb-half {
+  margin-bottom: 4px;
+}
 
 // scss-lint:disable VendorPrefix
 .indicator {
