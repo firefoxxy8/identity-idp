@@ -81,7 +81,7 @@ feature 'LOA1 Single Sign On' do
     it 'user can view and confirm personal key during sign up', :js do
       allow(FeatureManagement).to receive(:prefill_otp_codes?).and_return(true)
       user = create(:user, :with_phone)
-      code = '1234'
+      code = 'ABC1-DEF2-GHI3-JKL4'
       stub_personal_key(user: user, code: code)
 
       loa1_sp_session
@@ -165,19 +165,6 @@ feature 'LOA1 Single Sign On' do
 
   context 'fully signed up user is signed in with email and password only' do
     it 'prompts to enter OTP' do
-      user = create(:user, :signed_up)
-      sign_in_user(user)
-
-      saml_authn_request = auth_request.create(saml_settings)
-      visit saml_authn_request
-
-      expect(current_path).to eq login_two_factor_path(otp_delivery_preference: 'sms')
-    end
-  end
-
-  context 'fully signed up user is signed in with email/pwd and new agency based uuids' do
-    it 'prompts to enter OTP' do
-      allow(FeatureManagement).to receive(:enable_agency_based_uuids?).and_return(true)
       user = create(:user, :signed_up)
       sign_in_user(user)
 

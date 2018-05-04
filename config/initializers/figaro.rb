@@ -3,8 +3,8 @@ require Rails.root.join('lib', 'config_validator.rb')
 Figaro.require_keys(
   'attribute_cost',
   'attribute_encryption_key',
+  'database_statement_timeout',
   'domain_name',
-  'enable_agency_based_uuids',
   'enable_identity_verification',
   'enable_rate_limiting',
   'enable_test_routes',
@@ -39,6 +39,7 @@ Figaro.require_keys(
   'requests_per_ip_limit',
   'requests_per_ip_period',
   'requests_per_ip_track_only_mode',
+  'remember_device_expiration_days',
   'saml_passphrase',
   'scrypt_cost',
   'secret_key_base',

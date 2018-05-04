@@ -39,7 +39,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
       stub_analytics
       analytics_hash = {
         context: 'authentication',
-        method: 'sms',
+        multi_factor_auth_method: 'sms',
         confirmation_for_phone_change: false,
       }
 
@@ -79,7 +79,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
           errors: {},
           confirmation_for_phone_change: false,
           context: 'authentication',
-          method: 'sms',
+          multi_factor_auth_method: 'sms',
         }
 
         stub_analytics
@@ -125,7 +125,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
           errors: {},
           confirmation_for_phone_change: false,
           context: 'authentication',
-          method: 'sms',
+          multi_factor_auth_method: 'sms',
         }
 
         stub_analytics
@@ -169,7 +169,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
           errors: {},
           confirmation_for_phone_change: false,
           context: 'authentication',
-          method: 'sms',
+          multi_factor_auth_method: 'sms',
         }
 
         stub_analytics
@@ -181,6 +181,39 @@ describe TwoFactorAuthentication::OtpVerificationController do
           code: subject.current_user.reload.direct_otp,
           otp_delivery_preference: 'sms',
         }
+      end
+
+      context 'with remember_device in the params' do
+        it 'saves an encrypted cookie' do
+          remember_device_cookie = instance_double(RememberDeviceCookie)
+          allow(remember_device_cookie).to receive(:to_json).and_return('asdf1234')
+          allow(RememberDeviceCookie).to receive(:new).and_return(remember_device_cookie)
+
+          post(
+            :create,
+            params: {
+              code: subject.current_user.direct_otp,
+              otp_delivery_preference: 'sms',
+              remember_device: 'true',
+            }
+          )
+
+          expect(cookies.encrypted[:remember_device]).to eq('asdf1234')
+        end
+      end
+
+      context 'without remember_device in the params' do
+        it 'does not save an encrypted cookie' do
+          post(
+            :create,
+            params: {
+              code: subject.current_user.direct_otp,
+              otp_delivery_preference: 'sms',
+            }
+          )
+
+          expect(cookies[:remember_device]).to be_nil
+        end
       end
     end
 
@@ -265,7 +298,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
               errors: {},
               confirmation_for_phone_change: true,
               context: 'confirmation',
-              method: 'sms',
+              multi_factor_auth_method: 'sms',
             }
 
             expect(@analytics).to have_received(:track_event).
@@ -307,7 +340,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
               errors: {},
               confirmation_for_phone_change: true,
               context: 'confirmation',
-              method: 'sms',
+              multi_factor_auth_method: 'sms',
             }
 
             expect(@analytics).to have_received(:track_event).
@@ -343,7 +376,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
               success: true,
               errors: {},
               context: 'confirmation',
-              method: 'sms',
+              multi_factor_auth_method: 'sms',
               confirmation_for_phone_change: false,
             }
 
@@ -357,6 +390,39 @@ describe TwoFactorAuthentication::OtpVerificationController do
           it 'resets context to authentication' do
             expect(subject.user_session[:context]).to eq 'authentication'
           end
+        end
+      end
+
+      context 'with remember_device in the params' do
+        it 'saves an encrypted cookie' do
+          remember_device_cookie = instance_double(RememberDeviceCookie)
+          allow(remember_device_cookie).to receive(:to_json).and_return('asdf1234')
+          allow(RememberDeviceCookie).to receive(:new).and_return(remember_device_cookie)
+
+          post(
+            :create,
+            params: {
+              code: subject.current_user.direct_otp,
+              otp_delivery_preference: 'sms',
+              remember_device: 'true',
+            }
+          )
+
+          expect(cookies.encrypted[:remember_device]).to eq('asdf1234')
+        end
+      end
+
+      context 'without remember_device in the params' do
+        it 'does not save an encrypted cookie' do
+          post(
+            :create,
+            params: {
+              code: subject.current_user.direct_otp,
+              otp_delivery_preference: 'sms',
+            }
+          )
+
+          expect(cookies[:remember_device]).to be_nil
         end
       end
     end
@@ -401,7 +467,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
             errors: {},
             confirmation_for_phone_change: false,
             context: 'idv',
-            method: 'sms',
+            multi_factor_auth_method: 'sms',
           }
 
           expect(@analytics).to have_received(:track_event).
@@ -467,11 +533,26 @@ describe TwoFactorAuthentication::OtpVerificationController do
             errors: {},
             confirmation_for_phone_change: false,
             context: 'idv',
-            method: 'sms',
+            multi_factor_auth_method: 'sms',
           }
 
           expect(@analytics).to have_received(:track_event).
             with(Analytics::MULTI_FACTOR_AUTH, properties)
+        end
+      end
+
+      context 'with remember_device in the params' do
+        it 'ignores the param and does not save an encrypted cookie' do
+          post(
+            :create,
+            params: {
+              code: subject.current_user.direct_otp,
+              otp_delivery_preference: 'sms',
+              remember_device: 'true',
+            }
+          )
+
+          expect(cookies[:remember_device]).to be_nil
         end
       end
     end
