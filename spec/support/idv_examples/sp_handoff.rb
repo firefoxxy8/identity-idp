@@ -15,7 +15,7 @@ shared_examples 'sp handoff after identity verification' do |sp|
       visit_idp_from_sp_with_loa3(sp)
       register_user(email)
 
-      expect(current_path).to eq verify_path
+      expect(current_path).to eq idv_path
 
       click_idv_begin
       complete_idv_profile_ok(user)
@@ -44,7 +44,7 @@ shared_examples 'sp handoff after identity verification' do |sp|
       sign_in_user(user)
       click_submit_default
 
-      expect(current_path).to eq verify_path
+      expect(current_path).to eq idv_path
 
       click_idv_begin
       complete_idv_profile_ok(user)
@@ -69,7 +69,7 @@ shared_examples 'sp handoff after identity verification' do |sp|
 
     before do
       sign_in_and_2fa_user(user)
-      visit verify_session_path
+      visit idv_session_path
       complete_idv_profile_ok(user)
       click_acknowledge_personal_key
       first(:link, t('links.sign_out')).click
@@ -189,8 +189,7 @@ shared_examples 'sp handoff after identity verification' do |sp|
   end
 
   def expect_successful_saml_handoff
-    user_access_key = user.unlock_user_access_key(Features::SessionHelper::VALID_PASSWORD)
-    profile_phone = user.active_profile.decrypt_pii(user_access_key).phone
+    profile_phone = user.active_profile.decrypt_pii(Features::SessionHelper::VALID_PASSWORD).phone
     xmldoc = SamlResponseDoc.new('feature', 'response_assertion')
 
     expect(AgencyIdentity.where(user_id: user.id, agency_id: 2).first.uuid).to eq(xmldoc.uuid)
