@@ -47,7 +47,7 @@ gem 'saml_idp', git: 'https://github.com/18F/saml_idp.git', tag: 'v0.6.0-18f'
 gem 'sass-rails', '~> 5.0'
 gem 'savon'
 gem 'scrypt'
-gem 'secure_headers', '~> 3.0'
+gem 'secure_headers', '~> 6.0'
 gem 'sidekiq'
 gem 'simple_form'
 gem 'sinatra', require: false
