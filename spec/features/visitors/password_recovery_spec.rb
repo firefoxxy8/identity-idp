@@ -253,4 +253,26 @@ feature 'Password Recovery' do
         to(include('style-src \'self\' \'unsafe-inline\''))
     end
   end
+
+  context 'user resets password with unconfirmed email address edit' do
+    let(:user) { create(:user, :signed_up) }
+
+    before do
+      sign_in_and_2fa_user(user)
+      visit manage_email_path
+    end
+
+    it 'receives password reset message at original address' do
+      fill_in 'Email', with: 'new_email@test.com'
+      click_button 'Update'
+      expect(page).to have_content t('devise.registrations.email_update_needs_confirmation')
+      visit sign_out_url
+
+      click_link t('links.passwords.forgot')
+      fill_in 'password_reset_email_form_email', with: user.email
+      click_button t('forms.buttons.continue')
+
+      expect(open_last_email).to be_delivered_to(user.email)
+    end
+  end
 end
