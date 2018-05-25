@@ -60,7 +60,9 @@ feature 'Two Factor Authentication' do
         fill_in 'Phone', with: unsupported_phone
         click_send_security_code
 
+
         expect(current_path).to eq phone_setup_path
+
         expect(page).to have_content t(
           'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported',
           location: 'Bahamas'
@@ -81,6 +83,7 @@ feature 'Two Factor Authentication' do
         click_send_security_code
 
         expect(current_path).to eq phone_setup_path
+
         expect(page).to have_content t(
           'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported',
           location: 'Turkey'
@@ -90,6 +93,7 @@ feature 'Two Factor Authentication' do
 
         expect(current_path).to eq two_factor_options_path
       end
+
 
       scenario 'updates international code as user types', :js do
         sign_in_before_2fa
@@ -112,6 +116,7 @@ feature 'Two Factor Authentication' do
       scenario 'allows a user to continue typing even if a number is invalid', :js do
         sign_in_before_2fa
         choose_otp_delivery_preference('voice')
+
         select_country_and_type_phone_number(country: 'us', number: '12345678901234567890')
 
         expect(phone_field.value).to eq('12345678901234567890')

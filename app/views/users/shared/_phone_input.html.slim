@@ -10,7 +10,6 @@
       = t('devise.two_factor_authentication.otp_phone_label_info')
   = f.input :phone, as: :tel, label: false, required: true,
       input_html: { class: 'new-phone col-8 mb4' }
-/ = render 'users/shared/otp_delivery_preference_selection'
 
 = stylesheet_link_tag 'intl-tel-number/intlTelInput'
 = javascript_pack_tag 'intl-tel-input'
