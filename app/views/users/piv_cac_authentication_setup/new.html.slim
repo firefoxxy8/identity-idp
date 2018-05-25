@@ -6,6 +6,7 @@ p.mt-tiny.mb3 = @presenter.description
 = link_to @presenter.piv_cac_capture_text,
               @presenter.piv_cac_service_link,
               class: 'btn btn-primary'
-= render 'shared/cancel', link: account_path
+.mt2.pt1.border-top
+  = link_to t('devise.two_factor_authentication.two_factor_choice_cancel'), two_factor_options_path
 
 == javascript_pack_tag 'clipboard'

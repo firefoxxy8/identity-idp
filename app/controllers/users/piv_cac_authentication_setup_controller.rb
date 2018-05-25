@@ -3,9 +3,9 @@ module Users
     include UserAuthenticator
     include PivCacConcern
 
-    before_action :confirm_two_factor_authenticated
     before_action :authorize_piv_cac_setup, only: :new
     before_action :authorize_piv_cac_disable, only: :delete
+    before_action :confirm_two_factor_authenticated, except: :new
 
     def new
       if params.key?(:token)
