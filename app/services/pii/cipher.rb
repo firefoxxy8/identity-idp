@@ -16,10 +16,6 @@ module Pii
       decipher(payload)
     end
 
-    def self.random_key
-      SecureRandom.random_bytes(32)
-    end
-
     private
 
     attr_accessor :cipher
@@ -48,8 +44,8 @@ module Pii
 
     def unpack_payload(payload)
       JSON.parse(payload, symbolize_names: true)
-    rescue StandardError => err
-      raise Pii::EncryptionError, "Unable to parse encrypted payload. #{err.inspect}"
+    rescue StandardError
+      raise Pii::EncryptionError, 'Unable to parse encrypted payload'
     end
 
     def iv(unpacked_payload)

@@ -28,7 +28,7 @@ module OpenidConnect
 
     def redirect_to_account_or_verify_profile_url
       return redirect_to(account_or_verify_profile_url) if profile_needs_verification?
-      redirect_to(verify_url) if identity_needs_verification?
+      redirect_to(idv_url) if identity_needs_verification?
     end
 
     def profile_or_identity_needs_verification?
@@ -36,7 +36,8 @@ module OpenidConnect
     end
 
     def track_authorize_analytics(result)
-      analytics_attributes = result.to_h.except(:redirect_uri)
+      analytics_attributes = result.to_h.except(:redirect_uri).
+                             merge(user_fully_authenticated: user_fully_authenticated?)
 
       analytics.track_event(
         Analytics::OPENID_CONNECT_REQUEST_AUTHORIZATION, analytics_attributes

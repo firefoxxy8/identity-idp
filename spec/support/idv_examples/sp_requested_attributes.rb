@@ -3,8 +3,6 @@ shared_examples 'sp requesting attributes' do |sp|
   include IdvHelper
 
   before do
-    allow(Figaro.env).to receive(:enable_agency_based_uuids).and_return('true')
-    allow(Figaro.env).to receive(:agencies_with_agency_based_uuids).and_return('1,2,3')
     allow(FeatureManagement).to receive(:prefill_otp_codes?).and_return(true)
   end
 
@@ -17,9 +15,10 @@ shared_examples 'sp requesting attributes' do |sp|
       sign_in_user(user)
       click_submit_default
 
-      expect(current_path).to eq verify_path
+      expect(current_path).to eq idv_jurisdiction_path
 
-      click_idv_begin
+      fill_out_idv_jurisdiction_ok
+      click_idv_continue
       complete_idv_profile_ok(user)
       click_acknowledge_personal_key
 
@@ -42,7 +41,8 @@ shared_examples 'sp requesting attributes' do |sp|
       click_link t('links.sign_in')
       sign_in_user(user)
       click_submit_default
-      click_idv_begin
+      fill_out_idv_jurisdiction_ok
+      click_idv_continue
       complete_idv_profile_ok(user)
       click_acknowledge_personal_key
       click_on I18n.t('forms.buttons.continue')

@@ -1,8 +1,5 @@
 shared_examples 'failed idv job' do |step|
-  let(:idv_job_class) do
-    return Idv::ProfileJob if step == :profile
-    return Idv::PhoneJob if step == :phone
-  end
+  let(:idv_job_class) { Idv::ProoferJob }
   let(:step_locale_key) do
     return :sessions if step == :profile
     step
@@ -27,8 +24,8 @@ shared_examples 'failed idv job' do |step|
       it 'shows a warning' do
         expect(page).to have_content t("idv.modal.#{step_locale_key}.heading")
         expect(page).to have_content t("idv.modal.#{step_locale_key}.jobfail")
-        expect(page).to have_current_path(verify_session_result_path) if step == :profile
-        expect(page).to have_current_path(verify_phone_result_path) if step == :phone
+        expect(page).to have_current_path(idv_session_result_path) if step == :profile
+        expect(page).to have_current_path(idv_phone_result_path) if step == :phone
       end
     end
 
@@ -39,8 +36,8 @@ shared_examples 'failed idv job' do |step|
           '.modal-warning',
           text: strip_tags(t("idv.modal.#{step_locale_key}.jobfail"))
         )
-        expect(page).to have_current_path(verify_session_result_path) if step == :profile
-        expect(page).to have_current_path(verify_phone_result_path) if step == :phone
+        expect(page).to have_current_path(idv_session_result_path) if step == :profile
+        expect(page).to have_current_path(idv_phone_result_path) if step == :phone
       end
     end
   end
@@ -66,8 +63,8 @@ shared_examples 'failed idv job' do |step|
       it 'shows a warning' do
         expect(page).to have_content t("idv.modal.#{step_locale_key}.heading")
         expect(page).to have_content t("idv.modal.#{step_locale_key}.timeout")
-        expect(page).to have_current_path(verify_session_result_path) if step == :profile
-        expect(page).to have_current_path(verify_phone_result_path) if step == :phone
+        expect(page).to have_current_path(idv_session_result_path) if step == :profile
+        expect(page).to have_current_path(idv_phone_result_path) if step == :phone
       end
     end
 
@@ -78,19 +75,14 @@ shared_examples 'failed idv job' do |step|
           '.modal-warning',
           text: strip_tags(t("idv.modal.#{step_locale_key}.timeout"))
         )
-        expect(page).to have_current_path(verify_session_result_path) if step == :profile
-        expect(page).to have_current_path(verify_phone_result_path) if step == :phone
+        expect(page).to have_current_path(idv_session_result_path) if step == :profile
+        expect(page).to have_current_path(idv_phone_result_path) if step == :phone
       end
     end
   end
 
   def stub_idv_job_to_raise_error_in_background(idv_job_class)
-    allow(idv_job_class).to receive(:new).and_wrap_original do |new, *args|
-      idv_job = new.call(*args)
-      allow(idv_job).to receive(:verify_identity_with_vendor).
-        and_raise('this is a test error')
-      idv_job
-    end
+    allow(Idv::Agent).to receive(:new).and_raise('this is a test error')
     allow(idv_job_class).to receive(:perform_now).and_wrap_original do |perform_now, *args|
       begin
         perform_now.call(*args)

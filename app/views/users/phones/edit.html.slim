@@ -6,14 +6,7 @@ h1.h3.my0 = t('headings.edit_info.phone')
     data: { unsupported_area_codes: unsupported_area_codes,
       international_phone_form: true },
     url: manage_phone_path) do |f|
-  = f.input :international_code,
-        collection: international_phone_codes,
-        include_blank: false,
-        input_html: { class: 'international-code' }
-  = f.label :phone
-    strong.left = t('account.index.phone')
-  = f.input :phone, as: :tel, required: true, input_html: { class: 'phone', value: nil },
-    label: false
+  = render 'users/shared/phone_input', f: f
   = render 'users/shared/otp_delivery_preference_selection'
-  = f.button :submit, t('forms.buttons.submit.confirm_change'), class: 'mt2'
+  = f.button :submit, t('forms.buttons.submit.confirm_change')
 = render 'shared/cancel', link: account_path

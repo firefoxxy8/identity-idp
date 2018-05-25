@@ -39,7 +39,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
       stub_analytics
       analytics_hash = {
         context: 'authentication',
-        method: 'sms',
+        multi_factor_auth_method: 'sms',
         confirmation_for_phone_change: false,
       }
 
@@ -79,7 +79,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
           errors: {},
           confirmation_for_phone_change: false,
           context: 'authentication',
-          method: 'sms',
+          multi_factor_auth_method: 'sms',
         }
 
         stub_analytics
@@ -125,7 +125,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
           errors: {},
           confirmation_for_phone_change: false,
           context: 'authentication',
-          method: 'sms',
+          multi_factor_auth_method: 'sms',
         }
 
         stub_analytics
@@ -169,7 +169,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
           errors: {},
           confirmation_for_phone_change: false,
           context: 'authentication',
-          method: 'sms',
+          multi_factor_auth_method: 'sms',
         }
 
         stub_analytics
@@ -298,7 +298,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
               errors: {},
               confirmation_for_phone_change: true,
               context: 'confirmation',
-              method: 'sms',
+              multi_factor_auth_method: 'sms',
             }
 
             expect(@analytics).to have_received(:track_event).
@@ -340,7 +340,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
               errors: {},
               confirmation_for_phone_change: true,
               context: 'confirmation',
-              method: 'sms',
+              multi_factor_auth_method: 'sms',
             }
 
             expect(@analytics).to have_received(:track_event).
@@ -376,7 +376,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
               success: true,
               errors: {},
               context: 'confirmation',
-              method: 'sms',
+              multi_factor_auth_method: 'sms',
               confirmation_for_phone_change: false,
             }
 
@@ -467,7 +467,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
             errors: {},
             confirmation_for_phone_change: false,
             context: 'idv',
-            method: 'sms',
+            multi_factor_auth_method: 'sms',
           }
 
           expect(@analytics).to have_received(:track_event).
@@ -493,8 +493,8 @@ describe TwoFactorAuthentication::OtpVerificationController do
           expect(subject.current_user.reload.phone_confirmed_at).to eq @previous_phone_confirmed_at
         end
 
-        it 'redirects to verify_review_path' do
-          expect(response).to redirect_to(verify_review_path)
+        it 'redirects to idv_review_path' do
+          expect(response).to redirect_to(idv_review_path)
         end
 
         it 'does not call UserMailer' do
@@ -533,7 +533,7 @@ describe TwoFactorAuthentication::OtpVerificationController do
             errors: {},
             confirmation_for_phone_change: false,
             context: 'idv',
-            method: 'sms',
+            multi_factor_auth_method: 'sms',
           }
 
           expect(@analytics).to have_received(:track_event).

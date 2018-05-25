@@ -17,6 +17,8 @@ DuplicateMethodCall:
     - UserFlowExporter#self.massage_assets
     - BasicAuthUrl#build
     - fallback_to_english
+    - Idv::Proofer#load_vendors!
+    - Upaya::RandomTools#self.random_weighted_sample
 FeatureEnvy:
   exclude:
     - ActiveJob::Logging::LogSubscriber#json_for
@@ -42,6 +44,7 @@ FeatureEnvy:
     - UserEncryptedAttributeOverrides#find_with_email
     - Utf8Sanitizer#event_attributes
     - Utf8Sanitizer#remote_ip
+    - Idv::Proofer#validate_vendors
 InstanceVariableAssumption:
   exclude:
     - User
@@ -63,11 +66,12 @@ LongParameterList:
     - IdentityLinker#optional_attributes
     - Idv::ProoferJob#perform
     - Idv::VendorResult#initialize
+    - Pii::Attributes#self.new_from_encrypted
 RepeatedConditional:
   exclude:
     - Users::ResetPasswordsController
-    - VerifyController
-    - Verify::Base
+    - IdvController
+    - Idv::Base
     - Rack::Attack
 TooManyConstants:
   exclude:
@@ -89,6 +93,13 @@ TooManyStatements:
     - UserFlowExporter#self.massage_assets
     - UserFlowExporter#self.massage_html
     - UserFlowExporter#self.run
+    - Idv::Agent#proof
+    - Idv::Proofer#configure_vendors
+    - Idv::VendorResult#initialize
+    - Upaya::QueueConfig#self.choose_queue_adapter
+    - Upaya::RandomTools#self.random_weighted_sample
+    - UserFlowFormatter#stop
+    - Upaya::QueueConfig#self.choose_queue_adapter
 TooManyMethods:
   exclude:
     - Users::ConfirmationsController
@@ -97,7 +108,7 @@ TooManyMethods:
     - OpenidConnect::AuthorizationController
     - Idv::Session
     - User
-    - Verify::SessionsController
+    - Idv::SessionsController
     - ServiceProviderSessionDecorator
     - SessionDecorator
 UncommunicativeMethodName:
@@ -180,3 +191,4 @@ UtilityFunction:
 exclude_paths:
   - db/migrate
   - spec
+  - lib/tasks/

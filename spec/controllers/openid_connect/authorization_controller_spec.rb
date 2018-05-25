@@ -44,7 +44,8 @@ RSpec.describe OpenidConnect::AuthorizationController do
             with(Analytics::OPENID_CONNECT_REQUEST_AUTHORIZATION,
                  success: true,
                  client_id: client_id,
-                 errors: {})
+                 errors: {},
+                 user_fully_authenticated: true)
 
           action
         end
@@ -69,7 +70,7 @@ RSpec.describe OpenidConnect::AuthorizationController do
           context 'account is not already verified' do
             it 'redirects to have the user verify their account' do
               action
-              expect(controller).to redirect_to(verify_url)
+              expect(controller).to redirect_to(idv_url)
             end
           end
         end
@@ -128,7 +129,8 @@ RSpec.describe OpenidConnect::AuthorizationController do
             with(Analytics::OPENID_CONNECT_REQUEST_AUTHORIZATION,
                  success: false,
                  client_id: client_id,
-                 errors: hash_including(:prompt))
+                 errors: hash_including(:prompt),
+                 user_fully_authenticated: true)
 
           action
         end
@@ -148,7 +150,8 @@ RSpec.describe OpenidConnect::AuthorizationController do
             with(Analytics::OPENID_CONNECT_REQUEST_AUTHORIZATION,
                  success: false,
                  client_id: nil,
-                 errors: hash_including(:client_id))
+                 errors: hash_including(:client_id),
+                 user_fully_authenticated: true)
 
           action
         end

@@ -1,7 +1,20 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start 'rails' do
+    add_filter '/config/'
+    add_filter '/lib/rspec/formatters/user_flow_formatter.rb'
+    add_filter '/lib/user_flow_exporter.rb'
+    add_filter '/lib/deploy/migration_statement_timeout.rb'
+    add_filter '/lib/tasks/create_test_accounts.rb'
+  end
+end
+
+ENV['RAILS_ENV'] = 'test'
+
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
+require 'spec_helper'
 require 'email_spec'
 require 'factory_bot'
 require 'sidekiq/testing'
@@ -60,10 +73,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each, idv_job: true) do
-    [Idv::ProfileJob, Idv::PhoneJob].each do |job_class|
-      allow(job_class).to receive(:perform_later) do |*args|
-        job_class.perform_now(*args)
-      end
+    allow(Idv::ProoferJob).to receive(:perform_later) do |*args|
+      Idv::ProoferJob.perform_now(*args)
     end
   end
 

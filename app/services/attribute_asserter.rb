@@ -1,3 +1,6 @@
+require 'stringex/unidecoder'
+require 'stringex/core_ext'
+
 class AttributeAsserter
   VALID_ATTRIBUTES = %i[
     first_name
@@ -53,11 +56,7 @@ class AttributeAsserter
   def uuid_getter_function
     lambda do |principal|
       identity = principal.decorate.active_identity_for(service_provider)
-      if FeatureManagement.enable_agency_based_uuids?
-        AgencyIdentityLinker.new(identity).link_identity.uuid
-      else
-        identity.uuid
-      end
+      AgencyIdentityLinker.new(identity).link_identity.uuid
     end
   end
 
@@ -70,7 +69,7 @@ class AttributeAsserter
   end
 
   def attribute_getter_function_ascii(attr)
-    ->(_principal) { decrypted_pii[attr].ascii }
+    ->(_principal) { decrypted_pii[attr].to_ascii }
   end
 
   def add_email(attrs)
