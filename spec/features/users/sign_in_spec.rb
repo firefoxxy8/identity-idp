@@ -248,6 +248,8 @@ feature 'Sign in' do
       user = User.find_with_email(email)
       encrypted_email = user.encrypted_email
 
+      allow(Encryption::KmsClient).to receive(:looks_like_kms?).and_return(true)
+
       rotate_attribute_encryption_key_with_invalid_queue
 
       expect { signin(email, password) }.

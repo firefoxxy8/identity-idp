@@ -9,6 +9,8 @@ describe KeyRotator::AttributeEncryption do
       old_encrypted_phone = user.encrypted_phone
 
       rotate_attribute_encryption_key
+      allow_any_instance_of(Pii::Cipher).to receive(:encrypt).and_return('abcd')
+      allow_any_instance_of(Pii::Cipher).to receive(:decrypt).and_return('abcd')
       rotator.rotate
 
       expect(user.encrypted_email).to_not eq old_encrypted_email
@@ -21,6 +23,8 @@ describe KeyRotator::AttributeEncryption do
 
       rotate_attribute_encryption_key
       rotator = described_class.new(user)
+      allow_any_instance_of(Pii::Cipher).to receive(:encrypt).and_return('abcd')
+      allow_any_instance_of(Pii::Cipher).to receive(:decrypt).and_return('abcd')
       rotator.rotate
 
       expect(user.updated_at).to eq old_updated_timestamp

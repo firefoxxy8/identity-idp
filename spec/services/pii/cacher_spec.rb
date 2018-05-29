@@ -6,6 +6,9 @@ describe Pii::Cacher do
   let(:profile) { build(:profile, :active, :verified, user: user, pii: { ssn: '1234' }) }
   let(:diff_profile) { build(:profile, :verified, user: user, pii: { ssn: '5678' }) }
   let(:user_session) { {} }
+  before do
+    allow(Encryption::KmsClient).to receive(:looks_like_kms?).and_return(true)
+  end
 
   subject { described_class.new(user, user_session) }
 
@@ -64,6 +67,7 @@ describe Pii::Cacher do
       cacher = described_class.new(user, user_session)
       rotate_all_keys
 
+      allow_any_instance_of(Pii::Cipher).to receive(:encrypt).and_return('abcd')
       expect { cacher.save(password) }.to_not raise_error
     end
   end

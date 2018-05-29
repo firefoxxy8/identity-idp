@@ -4,6 +4,7 @@ require 'rake'
 describe 'rotate' do
   describe 'attribute_encryption_key' do
     it 'runs successfully' do
+
       prev_progress = ENV['PROGRESS']
       ENV['PROGRESS'] = 'no'
       Rake.application.rake_require('lib/tasks/rotate', [Rails.root.to_s])
@@ -17,6 +18,8 @@ describe 'rotate' do
 
       rotate_attribute_encryption_key
 
+      allow_any_instance_of(Pii::Cipher).to receive(:encrypt).and_return('abcd')
+      allow_any_instance_of(Pii::Cipher).to receive(:decrypt).and_return('abcd')
       Rake::Task['rotate:attribute_encryption_key'].invoke
 
       user.reload
