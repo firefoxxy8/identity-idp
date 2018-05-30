@@ -1,8 +1,8 @@
 - title t('titles.two_factor_setup')
+= image_tag asset_url(@presenter.image), width: 200, class: 'mb2'
 
-h1.h3.my0 = t('devise.two_factor_authentication.two_factor_setup')
-p.mt-tiny.mb0
-  = t('devise.two_factor_authentication.otp_setup_html')
+h1.h3.my0 = @presenter.heading
+p.mt-tiny.mb0 = @presenter.info
 = simple_form_for(@user_phone_form,
     html: { autocomplete: 'off', role: 'form' },
     data: { unsupported_area_codes: unsupported_area_codes,

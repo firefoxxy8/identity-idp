@@ -8,6 +8,7 @@ module Users
 
     def index
       @user_phone_form = UserPhoneForm.new(current_user)
+      @presenter = PhoneSetupPresenter.new(current_user)
       analytics.track_event(Analytics::USER_REGISTRATION_PHONE_SETUP_VISIT)
     end
 

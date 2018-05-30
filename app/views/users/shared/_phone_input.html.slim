@@ -5,9 +5,7 @@
     input_html: { class: 'international-code' }
 .sm-col-8.mb3
   = f.label :phone
-    strong.left = t('devise.two_factor_authentication.otp_phone_label')
-    span#otp_phone_label_info.ml1.italic
-      = t('devise.two_factor_authentication.otp_phone_label_info')
+    strong.left = @presenter.label
   = f.input :phone, as: :tel, label: false, required: true,
       input_html: { class: 'new-phone col-8 mb4' }
 
