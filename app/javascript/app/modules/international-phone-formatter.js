@@ -11,7 +11,7 @@ const fixCountryCodeSpacing = (text, countryCode) => {
   return text;
 };
 
-// Comment out USA formatting aas this was formatting all numbers like US numbers
+// Comment out USA formatting as this was formatting every country number like a US number
 // const getFormattedTextData = (text) => {
 //   if (text === '1') {
 //     text = '+1';
@@ -60,7 +60,7 @@ class InternationalPhoneFormatter extends Formatter {
   parse(text) {
     return text.replace(/[^\d+]/g, '');
   }
-
+  // Comment out USA formatting as this was formatting every country number like a US number
   // isChangeValid(change, error) {
   //   const formattedTextData = getFormattedTextData(change.proposed.text);
   //   const previousFormattedTextData = getFormattedTextData(change.current.text);
