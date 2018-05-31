@@ -16,6 +16,9 @@ es:
       confirm: Confirme la contraseña de su cuenta
       forgot: Restablezca la contraseña de su cuenta
     personal_key: Por si acaso
+    phone_setup:
+      voice: Envíe su código de seguridad a través de una llamada telefónica
+      sms: Envíe su código de seguridad a través de un mensaje de texto
     piv_cac_setup:
       new: Use su tarjeta PIV/CAC para asegurar su cuenta
       certificate:
@@ -44,7 +47,6 @@ es:
     totp_setup:
       new: Configure la autenticación de dos factores
     two_factor_setup: Configuración de autenticación de dos factores
-    two_factor_choice: Asegure su cuenta
     verify_email: Revise su email
     verify_profile: Active su cuenta
     visitors:

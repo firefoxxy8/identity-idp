@@ -1,4 +1,4 @@
-- title t('titles.two_factor_choice')
+- title t('titles.two_factor_setup')
 
 h1.h3.my0 = t('devise.two_factor_authentication.two_factor_choice')
 p.mt-tiny.mb3
@@ -38,7 +38,7 @@ p.mt-tiny.mb3
             = t('devise.two_factor_authentication.two_factor_choice_options.auth_app')
           .regular.gray-dark.fs-10p.mb-half
             = t('devise.two_factor_authentication.two_factor_choice_options.auth_app_info')
-      - if current_user.piv_cac_available? || true
+      - if current_user.piv_cac_available?
         label.btn-border.col-12.mb1 for="two_factor_options_form_otp_delivery_preference_piv_cac"
           .radio
             = radio_button_tag 'two_factor_options_form[otp_delivery_preference]', :piv_cac, false,

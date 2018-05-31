@@ -11,25 +11,26 @@ const fixCountryCodeSpacing = (text, countryCode) => {
   return text;
 };
 
-const getFormattedTextData = (text) => {
-  if (text === '1') {
-    text = '+1';
-  }
-
-  const asYouType = new AsYouType('US');
-  let formattedText = asYouType.input(text);
-  const countryCode = asYouType.country_phone_code;
-
-  if (asYouType.country_phone_code) {
-    formattedText = fixCountryCodeSpacing(formattedText, countryCode);
-  }
-
-  return {
-    text: formattedText,
-    template: asYouType.template,
-    countryCode,
-  };
-};
+// Comment out USA formatting aas this was formatting all numbers like US numbers
+// const getFormattedTextData = (text) => {
+//   if (text === '1') {
+//     text = '+1';
+//   }
+//
+//   const asYouType = new AsYouType('US');
+//   let formattedText = asYouType.input(text);
+//   const countryCode = asYouType.country_phone_code;
+//
+//   if (asYouType.country_phone_code) {
+//     formattedText = fixCountryCodeSpacing(formattedText, countryCode);
+//   }
+//
+//   return {
+//     text: formattedText,
+//     template: asYouType.template,
+//     countryCode,
+//   };
+// };
 
 const changeRemovesInternationalCode = (current, previous) => {
   if (previous.text.match(INTERNATIONAL_CODE_REGEX) &&
@@ -60,18 +61,18 @@ class InternationalPhoneFormatter extends Formatter {
     return text.replace(/[^\d+]/g, '');
   }
 
-  isChangeValid(change, error) {
-    const formattedTextData = getFormattedTextData(change.proposed.text);
-    const previousFormattedTextData = getFormattedTextData(change.current.text);
-
-    if (changeRemovesInternationalCode(formattedTextData, previousFormattedTextData)) {
-      return false;
-    }
-
-    change.proposed.text = formattedTextData.text;
-    change.proposed.selectedRange.start = cursorPosition(formattedTextData);
-    return super.isChangeValid(change, error);
-  }
+  // isChangeValid(change, error) {
+  //   const formattedTextData = getFormattedTextData(change.proposed.text);
+  //   const previousFormattedTextData = getFormattedTextData(change.current.text);
+  //
+  //   if (changeRemovesInternationalCode(formattedTextData, previousFormattedTextData)) {
+  //     return false;
+  //   }
+  //
+  //   change.proposed.text = formattedTextData.text;
+  //   change.proposed.selectedRange.start = cursorPosition(formattedTextData);
+  //   return super.isChangeValid(change, error);
+  // }
 }
 
 export default InternationalPhoneFormatter;

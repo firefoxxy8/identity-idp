@@ -14,7 +14,7 @@ feature 'Two Factor Authentication' do
       choose_otp_delivery_preference('sms')
 
       expect(page).
-        to have_content t('devise.two_factor_authentication.two_factor_setup')
+        to have_content t('titles.phone_setup.sms')
 
       send_security_code_without_entering_phone_number
 
@@ -75,25 +75,6 @@ feature 'Two Factor Authentication' do
     end
 
     context 'with international phone that does not support voice delivery' do
-      scenario 'renders an error if a user submits with voice selected' do
-        sign_in_before_2fa
-        choose_otp_delivery_preference('voice')
-        select 'Turkey +90', from: 'International code'
-        fill_in 'Phone', with: '555-555-5000'
-        click_send_security_code
-
-        expect(current_path).to eq phone_setup_path
-
-        expect(page).to have_content t(
-          'devise.two_factor_authentication.otp_delivery_preference.phone_unsupported',
-          location: 'Turkey'
-        )
-
-        click_on t('devise.two_factor_authentication.two_factor_choice_cancel')
-
-        expect(current_path).to eq two_factor_options_path
-      end
-
 
       scenario 'updates international code as user types', :js do
         sign_in_before_2fa
@@ -153,7 +134,7 @@ feature 'Two Factor Authentication' do
   end
 
   def submit_2fa_setup_form_with_valid_phone
-    fill_in 'Phone', with: '555-555-1212'
+    fill_in 'user_phone_form_phone', with: '555-555-1212'
     click_send_security_code
   end
 
@@ -392,7 +373,7 @@ feature 'Two Factor Authentication' do
 
     context 'When setting up 2FA for the first time' do
       it 'enforces rate limiting only for current phone' do
-        second_user = create(:user, :signed_up, phone: '+1 202-555-1212')
+        second_user = create(:user, :signed_up, phone: '202-555-1212')
 
         sign_in_before_2fa
         max_attempts = Figaro.env.otp_delivery_blocklist_maxretry.to_i

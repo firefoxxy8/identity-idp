@@ -45,12 +45,12 @@ feature 'Sign Up' do
       begin_sign_up_with_sp_and_loa(loa3: false)
       choose_otp_delivery_preference('sms')
       click_on t('devise.two_factor_authentication.two_factor_choice_cancel')
-      
+
       expect(page).to have_current_path(two_factor_options_path)
-      
+
       choose_otp_delivery_preference('auth_app')
       click_on t('devise.two_factor_authentication.two_factor_choice_cancel')
-      
+
       expect(page).to have_current_path(two_factor_options_path)
     end
   end
@@ -71,7 +71,7 @@ feature 'Sign Up' do
     allow(SmsOtpSenderJob).to receive(:perform_now).and_raise(twilio_error)
     sign_up_and_set_password
     choose_otp_delivery_preference('sms')
-    fill_in 'Phone', with: '202-555-1212'
+    fill_in 'user_phone_form_phone', with: '202-555-1212'
     click_send_security_code
 
     expect(current_path).to eq(phone_setup_path)
@@ -83,7 +83,7 @@ feature 'Sign Up' do
       it 'allows the user to toggle the modal' do
         begin_sign_up_with_sp_and_loa(loa3: false)
         expect(page).not_to have_xpath("//div[@id='cancel-action-modal']")
-        
+
         click_on t('links.cancel')
         expect(page).to have_xpath("//div[@id='cancel-action-modal']")
 

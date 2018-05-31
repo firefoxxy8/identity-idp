@@ -7,7 +7,8 @@ feature 'Phone confirmation during sign up' do
       allow(SmsOtpSenderJob).to receive(:perform_now)
       @user = sign_in_before_2fa
       choose_otp_delivery_preference('sms')
-      fill_in 'Phone', with: '555-555-5555'
+      click_continue
+      fill_in 'user_phone_form_phone', with: '555-555-5555'
       click_send_security_code
 
       expect(SmsOtpSenderJob).to have_received(:perform_now).with(
@@ -60,7 +61,7 @@ feature 'Phone confirmation during sign up' do
       @existing_user = create(:user, :signed_up)
       @user = sign_in_before_2fa
       choose_otp_delivery_preference('sms')
-      fill_in 'Phone', with: @existing_user.phone
+      fill_in 'user_phone_form_phone', with: @existing_user.phone
       click_send_security_code
     end
 

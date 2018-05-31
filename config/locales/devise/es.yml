@@ -138,6 +138,12 @@ es:
       personal_key_prompt: Puede usar esta clave personal una vez. Si todavía necesita
         un código después de iniciar una sesión, vaya a la página de configuración
         de su cuenta para obtener una clave nueva.
+      phone_sms_label: Número de teléfono móvil
+      phone_sms_info_html: Le enviaremos un mensaje de texto con un código de seguridad
+        <strong>cada vez que inicie sesión</strong>.
+      phone_voice_label: Número de teléfono
+      phone_voice_info_html: Te llamaremos con un código de seguridad <strong>cada
+        vez que inicies sesión</strong>.
       piv_cac_fallback:
         link: Use su PIV/CAC en su lugar
         text_html: "¿Tiene usted PIV/CAC? %{link}"

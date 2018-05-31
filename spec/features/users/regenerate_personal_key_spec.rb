@@ -146,7 +146,7 @@ def sign_up_and_view_personal_key
   allow(FeatureManagement).to receive(:prefill_otp_codes?).and_return(true)
   sign_up_and_set_password
   choose_otp_delivery_preference('sms')
-  fill_in 'Phone', with: '202-555-1212'
+  fill_in 'user_phone_form_phone', with: '202-555-1212'
   click_send_security_code
   click_submit_default
 end
