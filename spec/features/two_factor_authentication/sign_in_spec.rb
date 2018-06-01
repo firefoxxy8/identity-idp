@@ -126,12 +126,12 @@ feature 'Two Factor Authentication' do
   end
 
   def submit_2fa_setup_form_with_empty_string_phone
-    fill_in 'Phone', with: ''
+    fill_in 'user_phone_form_phone', with: ''
     click_send_security_code
   end
 
   def submit_2fa_setup_form_with_invalid_phone
-    fill_in 'Phone', with: 'five one zero five five five four three two one'
+    fill_in 'user_phone_form_phone', with: 'five one zero five five five four three two one'
     click_send_security_code
   end
 

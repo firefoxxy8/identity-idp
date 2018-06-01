@@ -39,8 +39,6 @@ module Users
         redirect_to phone_setup_url
       when 'auth_app'
         redirect_to authenticator_setup_url
-      when 'piv_cac'
-        redirect_to setup_piv_cac_url
       end
     end
 
