@@ -13,6 +13,8 @@ feature 'Two Factor Authentication' do
 
       choose_otp_delivery_preference('sms')
 
+      click_continue
+
       expect(page).
         to have_content t('titles.phone_setup.sms')
 
